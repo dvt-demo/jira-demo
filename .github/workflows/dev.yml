@@ -2,8 +2,9 @@ name: GitHub Development Deploy Demo
 run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on:
   push:
-    branches-ignore:
-      - 'main'
+    branches:
+      - '*'
+      - '!main'
 jobs:
   Development:
     if: github.event.pull_request.merged == true
