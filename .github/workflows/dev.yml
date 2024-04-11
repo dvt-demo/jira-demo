@@ -6,7 +6,6 @@ on:
       - main
 jobs:
   Development:
-    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - run: echo "DEVELOPMENT DEPLOYMENT"
