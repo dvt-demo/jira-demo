@@ -1,0 +1,83 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <title>Customer Support</title>
+  <link rel="stylesheet" type="text/css" href="basic_template.css" title="style" /> 
+</head>
+
+<body style="background-color:DodgerBlue;">
+  <div id="main">
+    <div id="header">
+      <div id="logo">
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="index.html">DevOps Guild<span class="logo_colour"> Gift Shop</span></a></h1>
+          <h2>The Guild's Gift Store</h2>
+        </div>
+      </div>
+    <div id="site_content">
+      <div class="sidebar">
+        <!-- insert your sidebar items here -->
+        <h3>Latest News</h3>
+        <h4>New Website Launched</h4>
+        <h5>August 1, 2022</h5>
+        <p>2020 sees the redesign of our website. Take a look around and let us know what you think.<br /><a href="#">Read more</a></p>
+        <p></p>
+        <h4>New customer service policies</h4>
+        <h5>July 3, 2022</h5>
+        <p>The new company customer servicepolicies have been released.<br /><a href="#">Read more</a></p>
+        <h4>We continue growing</h4>
+        <h5>July 7, 2022</h5>
+        <p>We have added 2 new locations: Portland and Tucson<br /><a href="#">Read more</a></p>
+
+      </div>
+      <div id="content">
+       <h1  id="id01">Welcome to the DevOps Guild Gift Store</h1>
+        <img id="id02" src="hero2.png" style="width:75%" class="w3-border w3-padding" alt="John">
+        <h1 id="id03"><b>Expect the Extraordinary</b></h1>
+        <p></p>
+        <p></p>
+        <p id="id04">This month's sales are performing well, especially the much-loved direct consumer products is up by 15.6%.</p>
+        <p>It's also noteworthy to point out that the partners have reported a large interest in our new line of appliances for the upper market.</p>
+      </div>
+    </div>
+     </div>
+    <script>
+     //-------------------------------//
+      // change the value of the following variable to Mitch or Alana and click on Commit to publish the changes
+      var employeeOfTheMonth = "Mitch";
+      //-------------------------------//
+      var month = new Date().getMonth();
+      var employeeName = document.getElementById("id01");
+      var employeePicture = document.getElementById("id02");
+      var employeeMonth = document.getElementById("id03");
+      var jobDescription = document.getElementById("id04");
+
+      if (employeeOfTheMonth == "Mitch"){
+        employeeName.innerHTML = "Welcome to the Open Webstore, ALANA GRANT!";
+        employeePicture.src = "hero.jpg";
+        jobDescription.innerHTML = "Our partner have reported better than expected sales during this month due to strong demand from the logictic sector.";
+      }
+
+      var d = new Date();
+      var month = new Array();
+      month[0] = "January";
+      month[1] = "February";
+      month[2] = "March";
+      month[3] = "April";
+      month[4] = "May";
+      month[5] = "June";
+      month[6] = "July";
+      month[7] = "August";
+      month[8] = "September";
+      month[9] = "October";
+      month[10] = "November";
+      month[11] = "December";
+      var txtMonth = month[d.getMonth()];
+      employeeMonth.innerHTML = "News for the month of " + txtMonth;
+
+    </script>
+
+</body>
+</html>
+
