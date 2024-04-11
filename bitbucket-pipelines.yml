@@ -1,0 +1,95 @@
+# This is a sample build configuration for Other# This is a sample b# This i
+# This is a sample build configuration for Other.
+# Check our guides at https://confluence.atlassian.com/x/5Q4SMw for more examples.
+# Only use spaces to indent your .yml configuration.
+# -----
+# You can specify a custom docker image from Docker Hub as your build environment.
+
+image: atlassian/default-image:3
+
+pipelines:
+  default:
+    - parallel:
+      - step:
+          name: 'Build and Test'
+          script:
+            - echo "Your build and test goes here..."
+      - step:
+          name: 'Lint'
+          script:
+            - echo "Your linting goes here..."
+      - step:
+          name: 'Security scan'
+          script:
+          - echo "Your security scan goes here..."
+          - LAST_COMMIT_MESSAGE=$(git log -n 1 --pretty=format:%s $BITBUCKET_COMMIT)
+          - pipe: atlassian/jira-transition:0.2.4
+            variables:
+              JIRA_BASE_URL: $JIRA_BASE_URL
+              JIRA_USER_EMAIL: $JIRA_USER_EMAIL
+              JIRA_API_TOKEN: $JIRA_API_TOKEN
+              ISSUE: $LAST_COMMIT_MESSAGE
+              TRANSITION: 'Architecture Review' 
+
+# The following deployment steps will be executed for each pipeline run. To configure your steps and conditionally deploy see https://support.atlassian.com/bitbucket-cloud/docs/configure-bitbucket-pipelinesyml/
+
+    - step:
+        name: 'Deployment to Dev/Test'
+        deployment: Test
+        trigger: 'manual'
+        script:
+          - LAST_COMMIT_MESSAGE=$(git log -n 1 --pretty=format:%s $BITBUCKET_COMMIT)
+          - pipe: atlassian/jira-transition:0.2.4
+            variables:
+              JIRA_BASE_URL: $JIRA_BASE_URL
+              JIRA_USER_EMAIL: $JIRA_USER_EMAIL
+              JIRA_API_TOKEN: $JIRA_API_TOKEN
+              ISSUE: $LAST_COMMIT_MESSAGE
+              TRANSITION: 'In Progress' 
+    - step:
+        name: 'Deployment to Staging'
+        deployment: Staging
+        trigger: 'manual'
+        script:
+          - echo "Your deployment to production script goes here..."
+          - LAST_COMMIT_MESSAGE=$(git log -n 1 --pretty=format:%s $BITBUCKET_COMMIT)
+          - pipe: atlassian/jira-transition:0.2.4
+            variables:
+              JIRA_BASE_URL: $JIRA_BASE_URL
+              JIRA_USER_EMAIL: $JIRA_USER_EMAIL
+              JIRA_API_TOKEN: $JIRA_API_TOKEN
+              ISSUE: $LAST_COMMIT_MESSAGE
+              TRANSITION: 'Testing'  
+
+          - pipe: atlassian/slack-notify:2.0.0
+            variables:
+              WEBHOOK_URL: $SLACK_URL
+              PRETEXT: 'Hello DevOps Guild'
+              MESSAGE: 'Build Deployed to Staging, ready for UAT'
+              # PAYLOAD_FILE: '<string>' # Optional.
+              # DEBUG: '<boolean>' # Optional.
+ 
+    - step:
+        name: 'Deployment to Production'
+        deployment: production
+        trigger: 'manual'
+        script:
+          - echo "Your deployment to production script goes here..."
+          - LAST_COMMIT_MESSAGE=$(git log -n 1 --pretty=format:%s $BITBUCKET_COMMIT)
+          - pipe: atlassian/jira-transition:0.2.4
+            variables:
+              JIRA_BASE_URL: $JIRA_BASE_URL
+              JIRA_USER_EMAIL: $JIRA_USER_EMAIL
+              JIRA_API_TOKEN: $JIRA_API_TOKEN
+              ISSUE: $LAST_COMMIT_MESSAGE
+              TRANSITION: 'Done'
+
+          - pipe: atlassian/slack-notify:2.0.0
+            variables:
+              WEBHOOK_URL: $SLACK_URL
+              PRETEXT: 'Hello DevOps Guild'
+              MESSAGE: 'Build has been approved and it is in Production'
+              # PAYLOAD_FILE: '<string>' # Optional.
+              # DEBUG: '<boolean>' # Optional.
+
+           
