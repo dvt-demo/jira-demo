@@ -1,5 +1,5 @@
 name: GitHub Development Deploy Demo
-run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+run-name: ${{ github.actor }} is deploying to Dev 🚀
 on:
   push:
     branches-ignore:
@@ -7,6 +7,7 @@ on:
 jobs:
   Development:
     runs-on: ubuntu-latest
+    environment: Development
     steps:
       - run: echo "DEVELOPMENT DEPLOYMENT"
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
