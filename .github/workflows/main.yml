@@ -10,6 +10,7 @@ jobs:
   Production:
     if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
+    environment: Production
     steps:
       - run: echo "PRODUCTION DEPLOYMENT"
       - run: echo "🎉 The job was automatically triggered by a ${{ github.event_name }} event."
