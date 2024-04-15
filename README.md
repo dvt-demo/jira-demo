@@ -1,6 +1,6 @@
 # README V1.1 #
 
-Update for github - test actions - let's see if gating works - testing from test-pipelines
+Update for github - test actions - let's see if gating works - testing from test-pipelines - demo
 
 
 This README would normally document whatever steps are necessary to get your application up and running.
